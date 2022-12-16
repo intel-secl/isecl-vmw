@@ -1,0 +1,10 @@
+daemonize>=2.5.0
+pyyaml>=6.0
+pyvmomi>=v6.5.0.2017.5-1
+pycryptodome>=3.16
+sqlalchemy>=1.4
+pg8000>=1.29
+rsa>=4.9
+pytest>=7.2
+mock>=4.0
+requests>=2.28

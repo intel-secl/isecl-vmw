@@ -1,0 +1,19 @@
+[Unit]
+Description=TCS Client
+
+[Service]
+Type=simple
+User=tcsclient
+Group=tcsclient
+WorkingDirectory=/usr/local/bin
+ExecStart=tcs-client run
+ExecStop=/bin/kill -s HUP $MAINPID
+ExecReload=/bin/kill -s HUP $MAINPID
+TimeoutStartSec=0
+Restart=on-failure
+PermissionsStartOnly=true
+RuntimeDirectory=tcs
+RuntimeDirectoryMode=0775
+
+[Install]
+WantedBy=multi-user.target
