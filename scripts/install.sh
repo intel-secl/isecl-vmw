@@ -78,7 +78,7 @@ pip install -r requirements.txt
 deactivate
 popd
 
-cp input/*.yml $CONFIG_PATH && chown $SERVICE_USERNAME:$SERVICE_USERNAME $CONFIG_PATH/*
+chown $SERVICE_USERNAME:$SERVICE_USERNAME $CONFIG_PATH/*
 chmod 700 $CONFIG_PATH/*
 
 # Create logging dir in /var/log
