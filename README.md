@@ -8,6 +8,9 @@ OS: RHEL 8.4, Ubuntu 20.04
 run postgres script install_pgdb.sh in scripus folder
 2) Create DB: ./create_db.sh <db name> <db user> <db password> in scripts folder
 
+PRE-REQ
+copy scs cacert from master node to /etc/scs_cert.pem
+
 To install TCS-Client run the following command
 1) populate tcs_client.env and place in home directory
 2) run ./scripts/install.sh

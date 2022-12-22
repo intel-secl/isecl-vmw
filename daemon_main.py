@@ -49,7 +49,7 @@ def displayHelpMsgAndExit():
 
 def displayDaemonVersion():
     print("TCS Client Daemon: ")
-    print("    version: %s" % config['tcsClient']['version'])
+    print("  version: " + config['tcsClient']['version'])
     logger.info("TCS Client Daemon: %s" % config['tcsClient']['version'])
     exitTCSClientDaemon(c.EXIT_CODE_SUCCESS)
 

@@ -103,7 +103,7 @@ class TCSClientDaemon:
         if TCSClientDaemon.__sessionId == None:
             try:
                 sessionURL = TCSClientDaemon.__config['tcsClient']['sessionURL']
-                response = requests.post(sessionURL, auth=HTTPBasicAuth(TCSClientDaemon.__config['tcsClient']['adminName'], TCSClientDaemon.__config['tcsClient']['adminPassword']), verify=constants.CERT_PATH)
+                response = requests.post(sessionURL, auth=HTTPBasicAuth(TCSClientDaemon.__config['tcsClient']['adminName'], TCSClientDaemon.__config['tcsClient']['adminPassword']), verify=constants.VMWARE_CERT)
 
                 if response.status_code == requests.codes.created:
                     TCSClientDaemon.__sessionId = response.json()
@@ -122,15 +122,15 @@ class TCSClientDaemon:
         data = {constants.HOST_ID:hostId}
         headers = {constants.API_SESSIONID:TCSClientDaemon.__sessionId,"Content-Type":"application/json"}
         try:
-            response = requests.post(regURL, headers=headers, json=data, verify=constants.CERT_PATH)
+            response = requests.post(regURL, headers=headers, json=data, verify=constants.VMWARE_CERT)
             if response.status_code == requests.codes.accepted:
                 return response.json()
             elif response.status_code == requests.codes.unauthorized:
                 sessionURL = TCSClientDaemon.__config['tcsClient']['sessionURL']
-                response = requests.post(sessionURL, auth=HTTPBasicAuth(TCSClientDaemon.__config['tcsClient']['adminName'], TCSClientDaemon.__config['tcsClient']['adminPassword']), verify=constants.CERT_PATH)
+                response = requests.post(sessionURL, auth=HTTPBasicAuth(TCSClientDaemon.__config['tcsClient']['adminName'], TCSClientDaemon.__config['tcsClient']['adminPassword']), verify=constants.VMWARE_CERT)
                 if response.status_code == requests.codes.created:
                     TCSClientDaemon.__sessionId = response.json()
-                    response = requests.post(regURL, headers=headers, json=data, verify=constants.CERT_PATH)
+                    response = requests.post(regURL, headers=headers, json=data, verify=constants.VMWARE_CERT)
                     if response.status_code == requests.codes.accepted:
                         return response.json()
                     else:
@@ -157,7 +157,7 @@ class TCSClientDaemon:
             taskURL = TCSClientDaemon.__config['tcsClient']['taskURL'] + taskId
             headers = {constants.API_SESSIONID:TCSClientDaemon.__sessionId}
             try:
-                response = requests.get(taskURL, headers=headers, verify=constants.CERT_PATH)
+                response = requests.get(taskURL, headers=headers, verify=constants.VMWARE_CERT)
                 if response.status_code == requests.codes.ok and (len(response.json()) > 0):
                     js = response.json()
                     jsonDump = json.loads(json.dumps(js),object_hook=lambda d: SimpleNamespace(**d))
@@ -179,7 +179,7 @@ class TCSClientDaemon:
         data = {constants.PPID:ppid}
         headers = {"Content-Type":"application/json"}
         try:
-            response = requests.put(tcsURL, headers=headers, json=data, verify=False)
+            response = requests.put(tcsURL, headers=headers, json=data, verify=constants.SCS_CERT)
             if response.status_code == requests.codes.ok:
                 TCSClientDaemon.__logger.info("Request to TCS sent successfully")
                 return True

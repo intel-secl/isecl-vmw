@@ -42,4 +42,5 @@ HOST_ID='host_id'
 API_SESSIONID='vmware-api-session-id'
 PPID='ppid'
 SUCCESS_STATUS="SUCCEEDED"
-CERT_PATH="/etc/vmware_certs"
+VMWARE_CERT="/etc/vmware_cert.pem"
+SCS_CERT="/etc/scs_cert.pem"

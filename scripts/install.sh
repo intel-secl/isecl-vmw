@@ -68,9 +68,10 @@ session=`curl -s -X POST -H "Authorization: Basic $auth" https://$VCENTER_IP/api
 
 chain=`curl -s -H "vmware-api-session-id: $session" https://$VCENTER_IP/api/vcenter/certificate-management/vcenter/trusted-root-chains -k | cut -d '"' -f 4`
 
-cert=`curl -s -H "vmware-api-session-id: $session" https://fmsgxvcsa.fm.intel.com/api/vcenter/certificate-management/vcenter/trusted-root-chains/$chain -k`
+cert=`curl -s -H "vmware-api-session-id: $session" https://$VCENTER_IP/api/vcenter/certificate-management/vcenter/trusted-root-chains/$chain -k`
 
-echo $cert | sed -e 's/\\n/\n/g' | cut -d'[' -f 2 | cut -d'"' -f2  | sed '/-----BEGIN X509 CRL-----/,$d' > /etc/vmware_certs
+echo $cert | sed -e 's/\\n/\n/g' | cut -d'[' -f 2 | cut -d'"' -f2  | sed '/-----BEGIN X509 CRL-----/,$d' > /etc/vmware_cert.pem
+chmod 644 /etc/vmware_cert.pem
 
 pushd $PRODUCT_HOME
 source bin/activate
@@ -78,8 +79,8 @@ pip install -r requirements.txt
 deactivate
 popd
 
-chown $SERVICE_USERNAME:$SERVICE_USERNAME $CONFIG_PATH/*
-chmod 700 $CONFIG_PATH/*
+chown $SERVICE_USERNAME:$SERVICE_USERNAME $CONFIG_PATH
+chmod 700 $CONFIG_PATH
 
 # Create logging dir in /var/log
 mkdir -p $LOG_PATH && chown $SERVICE_USERNAME:$SERVICE_USERNAME $LOG_PATH
