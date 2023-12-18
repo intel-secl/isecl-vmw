@@ -20,6 +20,6 @@ To Check status:
 	tcs-client stop
 	tcs-client start
 
-To run the unit tests run the following commands
+To run the unit tests run the following commands 
 pip install tox
 tox .
